@@ -1,5 +1,6 @@
 var app = angular.module('secretSanta', []);
 app.controller('controller', function ($scope) {
+  $scope.name = undefined;
   $scope.names = [];
   $scope.isAvailableToSort = false;
 
@@ -9,20 +10,25 @@ app.controller('controller', function ($scope) {
   }
 
 
-  $scope.checkKey = (e) => {
+  $scope.checkKey = (e, name) => {
     if (e.keyCode == 13) {
-      $scope.addName($scope.name);
+      $scope.addName(name);
+
     }
   };
 
   $scope.addName = (name) => {
+    if (!$scope.$$phase) {
+      $scope.$apply();
+    }
     $scope.names.push({
       id: new Date().getTime(),
       name: name.toUpperCase(),
       selected: false,
       friend: null
     });
-    $scope.name = undefined;
+    $scope.$$childHead.name = undefined;
+    // $scope.name = undefined;
     localStorage.setItem('santaSecretParticipants', JSON.stringify($scope.names));
   }
   $scope.removeName = (index) => {
@@ -39,5 +45,22 @@ app.controller('controller', function ($scope) {
 
   $scope.getNameToSort = () => {
 
-   };
+  };
+
+  $scope.sort = () => {
+    var index = 1;
+
+    var interval = setInterval(() => {
+      switch (index) {
+        case 1:
+          $scope.sortedName = "Procurando o amigo ideal"; break;
+      }
+      index++;
+
+      if(index > 3){
+        clearInterval(interval);
+      }
+      $scope.$apply();      
+    }, 1000);
+  };
 });

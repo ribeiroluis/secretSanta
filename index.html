@@ -16,15 +16,15 @@
 
 <body ng-app="secretSanta" ng-controller="controller">
     <div class="container">
-        <div class="row" ng-if="!isAvailableToSort">
+        <div class="row section" ng-if="!isAvailableToSort">
             <div class="row">
-                <h4 ng-if="names.length == 0">Has no one on the secret santa, add one :)</h4>
-                <h4 ng-if="names.length > 0">When everything is ready click in next... :)</h4>
-                <input type="text" ng-model="name" ng-keypress="checkKey($event)">
-                <a class="btn-floating btn-small waves-effect waves-light red {{name ? '':'disabled'}}"
-                    ng-click="addName(name)">
-                    <i class="material-icons">add</i>
-                </a>
+                <h3 ng-if="names.length == 0">Has no one on the secret santa, add one :)</h4>
+                    <h3 ng-if="names.length > 0">When everything is ready click in next... :)</h4>
+                        <input type="text" ng-model="name" ng-keypress="checkKey($event, name)">
+                        <a class="btn-floating btn-small waves-effect waves-light red lighten-1 {{name ? '':'disabled'}}"
+                            ng-click="addName(name)">
+                            <i class="material-icons">add</i>
+                        </a>
             </div>
             <div class="row">
                 <ul class="collection with-header">
@@ -32,27 +32,44 @@
                         <h4>Participants</h4>
                     </li>
                     <li class="collection-item" ng-repeat="n in names track by $index">
-                        <a class=" btn-floating btn-small red" ng-click="removeName($index)">
+                        <a class=" btn-floating btn-small red lighten-1" ng-click="removeName($index)">
                             <i class="material-icons">remove</i>
                         </a>
                         {{n.name}}
                     </li>
                 </ul>
 
-                <button class="btn waves-effect waves-light red" ng-click="prepareToSort()">Next
+                <button class="btn waves-effect waves-light red lighten-1" ng-click="prepareToSort()">Next
                     <i class="material-icons right">send</i>
                 </button>
             </div>
         </div>
 
-        <div class="row" ng-if="isAvailableToSort">
+        <div class="row section" ng-if="isAvailableToSort">
 
+            <div class="row center-align">
+                <a class="btn-floating btn-large pulse red lighten-1" ng-click="sort()"> 
+                    <i class="material-icons">person</i>
+                </a>
+            </div>
 
-            
-
-            <button class="btn waves-effect waves-light red" ng-click="prepareToSort()">Sort again
-                <i class="material-icons right">autorenew</i>
-            </button>
+            <div class="row center-align animated bounce" ng-if="sortedName">
+                <div class="col s12 m12 l12">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="row center-align">
+                            <div class="center-align">
+                                <!-- <h6>Your friend is:</h6> -->
+                                <h1 class="">{{sortedName}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row center-align">
+                <a class="waves-effect waves-light btn" ng-click="prepareToSort()">
+                    <i class="material-icons left">autorenew</i>Sort again
+                </a>
+            </div>
         </div>
     </div>
 </body>
