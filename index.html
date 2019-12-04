@@ -10,7 +10,8 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <link rel="shortcut icon" href="imgs/santa.ico" />
     <link rel='stylesheet' type='text/css' media='screen' href='./vendor/materialize.min.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='./vendor/materialize.min.js'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./vendor/animate.css'>
+
 
 </head>
 
@@ -18,13 +19,14 @@
     <div class="container">
         <div class="row section" ng-if="!isAvailableToSort">
             <div class="row">
-                <h3 ng-if="names.length == 0">Has no one on the secret santa, add one :)</h4>
-                    <h3 ng-if="names.length > 0">When everything is ready click in next... :)</h4>
-                        <input type="text" ng-model="name" ng-keypress="checkKey($event, name)">
-                        <a class="btn-floating btn-small waves-effect waves-light red lighten-1 {{name ? '':'disabled'}}"
-                            ng-click="addName(name)">
-                            <i class="material-icons">add</i>
-                        </a>
+                <h3 ng-if="names.length == 0">Has no one on the secret santa, add one :)</h3>
+                <h3 ng-if="checkIsEnd()">When everything is ready click in next... :)</h3>
+                <h3 ng-if="names.length > 0  && !checkIsEnd()">All done! :)</h3>
+                <input type="text" ng-model="name" ng-keypress="checkKey($event, name)">
+                <a class="btn-floating btn-small waves-effect waves-light red lighten-1 {{name ? '':'disabled'}}"
+                    ng-click="addName(name)">
+                    <i class="material-icons">add</i>
+                </a>
             </div>
             <div class="row">
                 <ul class="collection with-header">
@@ -36,29 +38,45 @@
                             <i class="material-icons">remove</i>
                         </a>
                         {{n.name}}
+                        <a ng-if="n.friend" class="btn-floating btn-small green lighten-1 right"
+                            ng-click="removeName($index)">
+                            <i class="material-icons">check</i>
+                        </a>
                     </li>
                 </ul>
 
-                <button class="btn waves-effect waves-light red lighten-1" ng-click="prepareToSort()">Next
+                <button class="btn waves-effect waves-light red lighten-1" ng-if="checkIsEnd()"
+                    ng-click="prepareToSort()">Next
                     <i class="material-icons right">send</i>
                 </button>
             </div>
         </div>
 
         <div class="row section" ng-if="isAvailableToSort">
-
             <div class="row center-align">
-                <a class="btn-floating btn-large pulse red lighten-1" ng-click="sort()"> 
-                    <i class="material-icons">person</i>
-                </a>
+                <h3>{{person.name}}</h3>
             </div>
 
-            <div class="row center-align animated bounce" ng-if="sortedName">
+            <div class="row center-align">
+                <h3 class="sortedName">{{sortedName}}</h3>
+            </div>
+
+            <div class="row center-align">
+                <a ng-if="index == 0" class="btn-floating btn-large pulse red lighten-1" ng-click="sort(person)">
+                    <i class="material-icons">person</i>
+                </a>
+                <button ng-if="index > 5" class="btn waves-effect waves-light red lighten-1"
+                    ng-click="prepareToSort()">Next
+                    <i class="material-icons right">send</i>
+                </button>
+                <audio src="sounds/santa.mp3" id="sound"></audio>
+            </div>
+
+            <!-- <div class="row center-align animated bounce" ng-if="sortedName">
                 <div class="col s12 m12 l12">
                     <div class="card-panel grey lighten-5 z-depth-1">
                         <div class="row center-align">
-                            <div class="center-align">
-                                <!-- <h6>Your friend is:</h6> -->
+                            <div class="center-align">                                
                                 <h1 class="">{{sortedName}}</h1>
                             </div>
                         </div>
@@ -69,7 +87,7 @@
                 <a class="waves-effect waves-light btn" ng-click="prepareToSort()">
                     <i class="material-icons left">autorenew</i>Sort again
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 </body>
@@ -77,5 +95,6 @@
 <script src='./vendor/bootstrap.min.js'></script>
 <script src='./vendor/angular.min.js'></script>
 <script src='./main.js'></script>
+<script src='./vendor/materialize.min.js'></script>
 
 </html>
