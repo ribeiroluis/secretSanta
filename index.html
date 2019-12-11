@@ -11,8 +11,6 @@
     <link rel="shortcut icon" href="imgs/santa.ico" />
     <link rel='stylesheet' type='text/css' media='screen' href='./vendor/materialize.min.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='./vendor/animate.css'>
-
-
 </head>
 
 <body ng-app="secretSanta" ng-controller="controller">
@@ -50,8 +48,8 @@
                     <i class="material-icons right">send</i>
                 </button>
             </div>
+            <img src="./imgs/santa.gif" alt="" class="santaButton" ng-click="resetData()">
         </div>
-
         <div class="row section" ng-if="isAvailableToSort">
             <div class="row center-align">
                 <h3>{{person.name}}</h3>
@@ -70,25 +68,8 @@
                     <i class="material-icons right">send</i>
                 </button>
                 <audio src="sounds/santa.mp3" id="sound"></audio>
-            </div>
-
-            <!-- <div class="row center-align animated bounce" ng-if="sortedName">
-                <div class="col s12 m12 l12">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="row center-align">
-                            <div class="center-align">                                
-                                <h1 class="">{{sortedName}}</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row center-align">
-                <a class="waves-effect waves-light btn" ng-click="prepareToSort()">
-                    <i class="material-icons left">autorenew</i>Sort again
-                </a>
-            </div> -->
-        </div>
+            </div>            
+        </div>        
     </div>
 </body>
 <script src='./vendor/jquery-3.4.1.min.js'></script>

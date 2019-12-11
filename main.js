@@ -10,7 +10,6 @@ app.controller('controller', function ($scope) {
     $scope.names = JSON.parse(localNames);
   }
 
-
   $scope.checkKey = (e, name) => {
     if (e.keyCode == 13) {
       $scope.addName(name);
@@ -30,20 +29,21 @@ app.controller('controller', function ($scope) {
     });
     $scope.$$childHead.name = undefined;
     saveData($scope.names);
-  }
+  };
+
   $scope.removeName = (index) => {
     $scope.names.splice(index, 1);
     saveData($scope.names);
-  }
+  };
 
   $scope.checkIsEnd = () => {
     var v = $scope.names.filter(f => f.friend == null);
     return v.length > 0;
-  }
+  };
 
   function saveData(names) {
     localStorage.setItem('santaSecretParticipants', JSON.stringify($scope.names));
-  }
+  };
 
 
   $scope.prepareToSort = () => {
@@ -64,12 +64,12 @@ app.controller('controller', function ($scope) {
   function getRandomItem(arr) {
     var items = arr.filter(f => f.friend == null);
     return items[Math.floor(Math.random() * items.length)];
-  }
+  };
 
   function getFriend(arr, person) {
     var items = arr.filter(f => f.selected == false && f.id != person.id);
     return items[Math.floor(Math.random() * items.length)];
-  }
+  };
 
   $scope.sort = (person) => {
     $scope.index = 1;
@@ -127,5 +127,13 @@ app.controller('controller', function ($scope) {
     }
 
     node.addEventListener('animationend', handleAnimationEnd)
+  };
+
+  $scope.resetData = ()=>{
+    var r = confirm("Do you want to erase all data?");
+    if(r){
+      localStorage.clear();
+      
+    }
   }
 });
